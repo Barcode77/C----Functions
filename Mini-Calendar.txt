@@ -1,0 +1,292 @@
+#### Mini-Calendar
+Have you ever wondered how an online calendar system works? How does it magically figure out the day of the week for any given date? Or, how can it simply jump to a random date 100 days from today? Well, fear not fellow C programmer! In this project, you will learn to make your own mini-calendar with some cool functionalities! The functions that you create will be able to answer simple questions like:
+- Is the given year a leap year?
+- What is the new date 500 days from today?
+We will be following the Gregorian Calendar which is the most commonly used calendar format.
+#### Tasks
+16/31 complete
+Mark the tasks as complete by checking them off
+### Creating the Leap Year function
+1. 
+Let’s start off by writing a function that will be able to determine whether the year is a leap year or not. This is an important piece of the puzzle when it comes to designing a calendar because a leap year has an extra leap day (Feb 29) which can change the final result by 1 or even more.
+For example, if it was Monday on Feb 28, then the day on March 1 could be either Tuesday or Wednesday depending on whether we need to add an extra leap day (Feb 29) for a leap year. Or to put it differently, the new date 2 days from now could be either March 1 (if leap year) or March 2!
+1. 
+At first glance, it might seem like a year being divisible by 4 is enough to call it a leap year. While that is indeed a necessary condition, it is not however a sufficient one. There are special cases when the year is divisible (or NOT divisible) by 100 and/or 400 that we need to address in order to confirm whether it is a leap year. In fact, the full condition for a leap year is as follows:
+A leap year has to be divisible by 4 and NOT divisible by 100 except when the year is divisible by 400.
+That sounds a bit confusing so let’s try to unpack the logic step by step and also sharpen our problem-solving skills in the process.
+1. 
+In order to simplify the problem, let’s proceed by ruling out cases one by one.
+If a year is divisible by 4, it could be a leap year but we cannot say for sure. In order to consider this case further, let’s first resolve the opposite case where the year is NOT divisible by 4.
+What can you say about the year for this opposite case? Think for a bit and check the hint to see whether you are on the right track.
+Hint
+If the year is NOT divisible by 4, we can confirm it is not a leap year. This includes years that are simply not divisible by 4 such as 1999, 2001, 2002, 2003, 2005, etc.
+1. 
+Above the main() function, create a function called is_leap_year() with return type bool that takes a parameter year of type int. Inside this function, use an if statement to test the condition we discussed above and return false if the conditional logic evaluates to true.
+Hint
+The structure of the function should look something like this:
+return_type function_name(parameter_type parameter_name)
+If the year is NOT divisible by 4 is true, the function should return false as follows:
+if (the year is NOT divisible by 4) return false
+You can use the modulo operator % to test for divisibility. If a % b == 0, it means a doesn’t leave a remainder when divided by b and is hence divisible by b. Similarly, a % b != 0 means a is NOT divisible by b.
+1. 
+However, if the last condition evaluates to false, this implies that the year must be divisible by 4. Now we can begin to consider the special cases involving 100 and 400 mentioned earlier.
+At this stage, if the year is further divisible by 100, it could be a leap year but once again we cannot say for sure. Just like we did previously, in order to consider this case further, let’s first resolve the opposite case where the year is NOT divisible by 100.
+What can you say about the year for this opposite case? Think for a bit and check the hint to see whether you are on the right track.
+Hint
+If the year is further NOT divisible by 100, we know for sure that this is a leap year. This includes years that are divisible by 4 but NOT divisible by 100 such as 1992, 1996, 2004, 2008, etc. It doesn’t include 2000 since it is divisible by 100.
+1. 
+Use an else if statement to test this condition and return true if the conditional logic evaluates to true.
+Hint
+If the year is NOT divisible by 100 is true, the function should return true.
+1. 
+However, if the previous condition evaluates to false, this implies the year must be divisible by 100. Now we can focus on this special case directly.
+At this stage, what can you say about the year if it is further NOT divisible by 400? Think for a bit and check the hint to see whether you are on the right track.
+Hint
+If the year is further NOT divisible by 400, we know for sure that this is not a leap year. This includes years that are divisible by 100 but NOT divisible by 400 like 1800, 1900, 2100, 2200, etc. It doesn’t include 2000 since it is divisible by 400.
+1. 
+Use another else if statement to test this condition and return false if the conditional logic evaluates to true.
+Hint
+If the year is further NOT divisible by 400 is true, the function should return false.
+1. 
+Finally, if the previous condition evaluates to false, what does it say about the year? Think for a bit and check the hint to see whether you are on the right track.
+Hint
+We know for sure that the year is a leap year because we have ruled out all cases that do not meet conditions for a leap year and the only case left that meets the condition for a leap year is that of the years divisible by 400. This would include years like 2000, 2400, 2800, 3200, etc.
+1. 
+Write an else statement for all other cases that returns true.
+Hint
+In all other cases, the function should return true so you can simply use an else statement.
+### Trying out the Leap Year Function
+1. 
+Now let’s see if your leap year function is working correctly! Inside the main() function, create a new variable of type int called year.
+1. 
+Prompt the user to input a year between 1800 and 10000. This is just to pick a suitable range involving leap years to work with.
+Hint
+Use printf to ask the user for input.
+1. 
+Then read the year using scanf() and store it into the variable year.
+Hint
+```
+scanf(format, &variable_name);
+
+```
+where format is %d for input of type int
+1. 
+Finally, make a call to the is_leap_year() function by passing year as an argument and output Leap Year if true or Not Leap Year if false.
+Hint
+```
+if (function returns true) printf("output when true");
+else printf("output when false");
+
+```
+1. 
+Let’s compile and execute the file to test the function on some inputs!
+To compile, type the following after the $ sign and press enter:
+```
+$ gcc mini_calendar.c
+
+```
+To execute, type the following and press enter:
+```
+$ ./a.out
+
+```
+Enter a year between 1800 and 10000 and press enter to see if it is a leap year or not! Do you think your function is working correctly?
+Hint
+After compiling, the terminal should look like:
+```
+$ gcc mini_calendar.c
+$
+
+```
+And upon execution, you should be prompted to enter a year and upon pressing enter you should see either Leap Year or Not Leap Year.
+1. 
+Could we have written the logic for determining a leap year in another way? Absolutely! But more than that, you might be wondering - “Did we really have to go through all that?” and the answer is - yes and no.
+- Yes - because breaking down a problem into small steps and really understanding the nitty-gritty is the key to becoming a great programmer.
+- No - because you might have been able to process the complex logic for determining a leap year in one go so it might have been boring to do everything on a case-by-case basis.
+That said, it is always preferable to express complex ideas with shorter code as you continue to grow as a programmer. How might you come up with a much shorter code that accomplishes the same task of determining whether a year is a leap year or not? Think for a moment and check the hint to see if you are on the right track.
+Hint
+A leap year has to be divisible by 4 and NOT divisible by 100 except when the year is divisible by 400.
+```
+bool is_leap_year(int year) {
+    return (year % 4 == 0 && (year % 100 || year % 400 == 0));
+}
+
+```
+Take a moment to see if you can wrap your head around the logic! After all, it is logically equivalent to the code you came up with when solving the problem case by case.
+Be sure to test various inputs to see if the output of this function matches the output of your function!
+### Adding Days to a Given Date
+1. 
+For the remainder of the project, the logic is a tad bit more challenging, but give your best effort to follow along and you might discover that the process can be very rewarding!
+To add more functionality to our mini-calendar, we will now try to add a certain number of days to a given date to find out the new date!
+Above the main() function but below the is_leap_year() function, create another function called add_days_to_date(). This function shouldn’t return anything and should take in three parameters - the month, day, and year - in the form of three pointers mm, dd, yy, each of type int, and a fourth parameter days_left_to_add also of type int.
+After that, think about why we want to pass three pointers (instead of values) and check the hint to see if you are on the right track.
+Hint
+The structure of the function should look something like this:
+```
+void function_name(type* pointer1, type* pointer2, type* pointer3, type parameter4)
+
+```
+void is used to specify that a function has no return type and * is used to specify the parameters are pointers.
+Remember that a pointer holds the memory address of the variable it points to. We want to pass mm, dd, yy as pointers because the changes on the variables can be made directly at the memory address. So after adding days_left_to_add to the given date, we can see the changes reflected outside the function as well. This means we can access this updated date without having to return anything from the function!
+But remember - be sure to dereference these pointers - *mm, *dd, *yy - in order to access the values at the respective memory addresses.
+1. 
+We want to add a certain number of days to a date, but you might notice that we can’t do this directly! In fact, we have to run through a month completely and add any remaining number of days to the next month, repeat the same for the next month, and the next, and so on …
+For example, if the date was March 14, 2022, and we wanted to add 45 days to this date, we would first have to know the number of days in March. Since March has 31 days, we first add 31 - 14 = 17 days to get March 31, 2022. Then we would add the remaining days (45 - 17 = 28) to the next month i.e. April which has 30 days. This means the new date would end up being - April 28, 2022!
+Are you beginning to see how you might start to approach this problem? Think for a bit and check the hint to see if you are on the right track.
+Hint
+You need to use some kind of data structure to store the number of days for each month. Something like an array should do the trick! Then, you just need to know the number of days you can add to the current month before you need to switch to the next month (and possibly next year if it’s December!).
+1. 
+Anywhere above the function add_days_to_date(), create an array called days_in_month whose values (starting at index 1) correspond to the number of days in each of the twelve months in the Gregorian Calendar in the correct order.
+Since array indexing starts at 0, 1, 2, … and so on, use 0 as a placeholder value at index 0. This way you can, for example, access the number of days in January using days_in_month[1] instead of days_in_month[0].
+So the second value in the array (at index 1) would be equal to the number of days in January ( 31), the third value in the array (at index 2) would be equal to the number of days in February ( 28), and so on for a total of 12 values for 12 months.
+Don’t worry about leap years for now. We will deal with them separately later.
+Hint
+The array should look something like this:
+array_type array_name[array_size] = {0, value1, value2, ..., valueN }
+Think carefully about what the array size should be since you track the days in each month starting at index 1 (and not at index 0) all the way up to index 12!
+A helpful song to remember the number of days in each month:
+> Thirty days hath September,
+April, June, and November,
+All the rest have thirty-one,
+Excepting February alone,
+And that has twenty-eight days clear,
+And twenty-nine in each leap year.
+1. 
+Now let’s start working on the add_days_to_date() function. As we have understood by now, we have the complete date in the form of *dd, *mm, *yy, and we want to add a certain number of days to this date in order to get a new date.
+How should we proceed?
+There are many ways but the main idea is to keep updating the values of *dd, *mm, and, *yy throughout the process.
+With that in mind, a key question to ask at each step is - how many more days can be added to the current month?
+This can be found by subtracting the date of the month from the number of days in the month. For example, March 14 has 31 - 14 = 17 more days that can be added to it before we hit March 31 and need to jump to the next month if we have to add more days.
+Inside the function, create a variable of type int called days_left_in_month to represent the number of days left in a month.
+1. 
+We want to keep adding days as long as we have days left to add. It’s that simple! This translates to a while loop in our code where we want to keep repeating the loop as long as days_left_to_add is greater than 0.
+Create a while loop that runs when the above condition is true.
+Hint
+A while loop looks something like this:
+```
+while (condition_is_true) {
+
+}
+
+```
+1. 
+Inside the while loop, we want to do quite a few things. First, let’s start by calculating days_left_in_month, which is equal to the number of days in the month minus the current date of the month. Make sure you assign this result to days_left_in_month.
+Hint
+You can access the number of days in the month by indexing into the array days_in_month[month_number].
+Be sure to dereference the pointer using * to refer to month_number i.e. *mm
+1. 
+Next, we want to check if the current month is February because if the current year is a leap year, that changes the number of days in February and can also possibly change our answer!
+Inside the while loop, add another statement that checks to see if the month is February AND if the year is a leap year (remember the is_leap_year() function?). If this condition evaluates to true, increase days_left_in_month by 1 since we now have an extra leap day i.e. Feb 29.
+Hint
+Remember to access the current month by dereferencing the pointer i.e. *mm and do the same for accessing the current year i.e. *yy before passing it into the is_leap_year() function.
+Make sure to use the && operator to combine the two conditions.
+To increase the value of a variable, let’s say x, by 1, you have a number of options:
+- x = x + 1;
+- x += 1;
+- x++;
+So the overall logic should look something like this:
+if the month is February AND the year is a leap year, increase the number of days left in the month by 1.
+1. 
+Great job so far! Now that our variables are ready, we can finally put them to use. We can’t just add days randomly to a month - we need to see how many days are available to be added into the current month. In other words,
+- What happens when days_left_to_add is greater than days_left_in_month?
+- What happens in the opposite case?
+Create an empty if-else statement to cover both these cases. Once you have done that, think about these questions for a bit and check to see the hint if you are on the right track.
+Hint
+The if-else statement should look something like:
+```
+if (true) {
+// do something here
+}
+else {
+// do something else
+}
+
+```
+When we have more days left to add than we have days left in a month, this means the current month cannot fit any more days, and so the calculation has to carry over into the next month.
+1. 
+This is the final boss! You got this!
+Let’s answer the first question we asked earlier:
+- What happens when days_left_to_add is greater than days_left_in_month?
+This means we have more days than we can fit in the current month. So here is how we can proceed:
+- Subtract days_left_in_month from days_left_to_add. This implies we are on the last day of the current month.
+- Subtract 1 more day from days_left_to_add so that we can enter the first day of the next month. We can now also set the current day of the month equal to 1 i.e. *dd = 1.
+- if the last month was December i.e. *mm == 12, we need to make sure that we cycle back to January i.e. *mm = 1. We also need to be sure to increase the current year by 1 since it’s a Happy New Year!
+- else it was some other month so we can safely just increase the current month by 1 i.e. *mm = *mm + 1
+Try your best to translate this logic into code and check to see the hint if you are stuck. Take your time and don’t rush!
+Hint
+The logic inside the if statement should look something like this:
+```
+if (days_left_to_add > days_left_in_month) { // if more days left than can be added in a month
+  days_left_to_add -= days_left_in_month + 1; // jump to the first day of the next month
+  *dd = 1; // we are on the first day of the next month, but what is the next month?
+  if (*mm == 12) { // if last month was December
+    *mm = 1; // next month is January
+    *yy = *yy + 1; // and we are in a new year so increase by 1
+  }
+  else *mm = *mm + 1; // if some other month, just increase by 1
+}
+
+```
+1. 
+So close! We just need to complete the else branch which was trying to answer the question
+- What happens when days_left_to_add is less than or equal to days_left_in_month?
+This is a trivial case! We can just add all the days left without worrying about overflowing out of the current month since we have already handled it in the previous case. We just need to remember to set days_left_to_add to 0 since we have arrived at our desired date and have no more days to add. Phew!
+With that in mind, you should be able to now complete the section inside the else branch.
+Hint
+The logic inside the else branch should look something like this:
+```
+else { // if all days can be added in this month
+  *dd = *dd + days_left_to_add; // simply add the days
+  days_left_to_add = 0; // no more days to add!
+}
+
+```
+### Bringing it All Together
+1. 
+Now let’s see if the add_days_to_date() function is working!
+Inside the main() function, start by commenting out any code you wrote previously.
+Create four new variables mm, dd, yy, and days_left_to_add all of type int.
+Prompt the user for some form of input: “Please enter a date between the years 1800 and 10000 in the format mm dd yy and provide the number of days to add to this date:”. For example, if you want to add 500 days to March 14, 2021, the input should be entered as follows:
+3  space 13  space 2021  space 500  enter
+Read the input using scanf() and store it in the memory address of the variables you created above.
+Hint
+```
+int var1, var2, var3, var4;
+printf("Enter some input: "); // something like 3 13 2021 500
+scanf("%d%d%d%d", &var1, &var2, &var3, &var4);
+
+```
+1. 
+Perform a function call to the add_days_to_date() function by passing the memory address (NOT the value!) of the first three variables mm, dd, yy but pass the final variable days_left_to_add as it is.
+Hint
+The function call should look something like this:
+```
+function_name(&var1, &var2, &var3, var4);
+
+```
+1. 
+Finally, output the new date using printf().
+You can simply print the values stored in the memory addresses of the variables you had passed earlier to the add_days_to_date() function since the changes can be accessed outside the function as well.
+Hint
+```
+printf("%d%d%d", var1, var2, var3);
+
+```
+1. 
+Let’s test your function on some inputs to make sure your output is correct! In order to do that, let’s compile and execute the file once again.
+If you remember from last time, to compile, type the following after the $ sign and press enter:
+```
+$ gcc mini_calendar.c
+
+```
+To execute, type the following and press enter:
+```
+$ ./a.out
+
+```
+- Leap Year Test - Try adding 2 days to Feb 28, 2020. What is your output? If you got 3 1 2020 (March 1, 2020), it seems like your function is working fine, but let’s test some more to make sure.
+- Leap Year + New Year Test - Try adding 367 days to Dec 31, 2019. What is your output? If you got 1 1 2021 (Jan 1, 2021), it seems like your function is definitely working correctly!
+Hint
+Provide the inputs as follows:
+- 2  space 28  space 2020  space 2  enter
+- 12  space 31  space 2019  space 367  enter
